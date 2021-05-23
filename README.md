@@ -16,6 +16,19 @@ The original version of the main web service: https://rusa.org/octime_acp.html. 
 
 Docker and Docker Compose were used for testing and deployment of the above services.
 
+## Project Screenshots
+The main web service calculator page:
+![ScreenShot](/screenshots/brevet_website_with_entries.png)
+
+The main web service display page:
+![ScreenShot](/screenshots/display_entries.png)
+
+The data produced by the API service:
+![ScreenShot](/screenshots/api_example.png)
+
+The consumer service webpage:
+![ScreenShot](/screenshots/consumer_website1.png)
+
 ## What is in this repository
 * docker-compose file (docker-compose.yml) and docker files (Dockerfile) are for containment and interaction between services.
 
