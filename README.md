@@ -1,28 +1,60 @@
-# Project 6: Brevet time calculator service
+<h1>Brevet time calculator clone with additional features and services</h1>
+<h2>Background</h2>
+<p>The Randonneurs USA (RUSA) time calculator is a tool used for calculating control times for a brevet. A brevet is a timed, long distance road cycling event. A control point refers to a point where a rider must obtain proof of passage (which shows that a rider completed the entire course without shortcutting and that they finished it within the allotted time limi). Control times are the minimum and maximum times by which the rider must arrive at the location (of the control point).</p>
 
-Simple listing service from project 5 stored in MongoDB database.
+<h2>Project Overview</h2>
+<p>The original version of the main web service: https://rusa.org/octime_acp.html. The updated main web service is located in the 'brevetCalculatorWebsite' directory.</p>
+<ul>Additional features to the main web service include: 
+    <li>Dynamic open and close time fields (implemented using Ajax)</li>
+    <li>Save distance and open and close times (implemented using MongoDB)</li>
+    <li>Display saved distance and open and close times</li>
+</ul>
+<br>
+<ul>Additional services include:
+    <li>A "producer" (API) service found in the directory titled 'api'. This service handles retrieving data from a database formatting the data (JSON and CSV), and making requested data avaliable. </li>
+    <li> A "Consumer" service found in the directory titled 'apiDataWebsite' This service makes all the requests detailed in the 'functionality' section and displays them on one web page. Note: The top 'n' open and close times are demoed for n=3, but the api service allows n to be any number.</li>
+</ul>
+<br>
+<p>Docker and Docker Compose were used for testing and deployment of the above services.</p>
 
-# Contact info/Class
-Michael O'Connell
-moconnel@uoregon.edu
-CIS 322 at the University of Oregon, Spring 2020
-5/30/2020
+<h2>What is in this repository</h2>
+<p>docker-compose file (docker-compose.yml) and docker files (Dockerfile) are for containment and interaction between services.</p>
+<br>
+<p>screenshots (directory) contains screenshots of each of the services described working.</p> 
+<br>
+<ol>3 main services were implemented for this project:
+    <li>A main web service: brevet calculator (in the 'brevetCalculatorWebsite' directory)
+    This service handles the logic for calculating the brevet open and close times, sending (form) data to a database (MongoDB), and creation of the brevet calculator web page.
+        <ul>In this service's directory:
+            <li>static (directory)<br>CSS and JS files necessary for HTML presentation and 'moment' library utilized in HTML pages.<li>
+            <li>templates (directory)<br>HTML templates to be completed with 'session' data. For example, calc.html is dynamically updated with open/close times.</li>
+            <li>acp_times.py<br>Logic for open and close time calculation based on the algorithm from https://rusa.org/pages/acp-brevet-control-times-calculator</li>
+            <li>brevet_calc.py<br>Framework for running our program (using Flask) which renders apprpriate HTML pages and handles AJAX requests (sent from template/calc.html).</li>
+            <li>config.py<br>Configures from app.ini and credentials.ini and conigures Flask application object</li>
+        </ul>
+    </li>
+    <li>A "producer" (API) service found in the directory titled 'api'. This service handles retrieving data from a database, formatting the data (JSON and CSV), and making requested data avaliable.
+        <ul>In this service's directory:
+            <li>api.py<br>Exposes/retrieves requested data from database</li>
+        </ul>
+    </li>
+    <li>A "Consumer" service found in the directory titled 'apiDataWebsite'. This service makes all the requests detailed in the 'functionality' section and displays them on one web page. Note: The top 'n' open and close times are demoed for n=3, but the api service allows n to be any number. This is all handled in index.php. </li>
+</ol>
 
-## What is in this repository
+## System Information
+* All services were tested and deployed using Docker Compose on a virtual machine (VirtualBox Version 6.0.24) running Linux Mint 19.3 MATE.
 
-docker-compose file and docker files for containment and interaction between services.
+* Installing Docker and Docker Compose on Linux Mint:
+https://computingforgeeks.com/install-docker-and-docker-compose-on-linux-mint-19/
 
-3 main services were implemented for this project:
-1. A main web service: brevet calculator
-This service handles the logic for calculating the brevet open and close times, sending (form) data to a database (MongoDB), and creation of the brevet calculator web page. For more information see project 5.
+## How to use
+1. Naviagate to DockerRestAPI
+2. $ docker-compose up
+3. To use the web service: http://0.0.0.0:5000/
+4. To view API data in browser: see api-service port given in terminal and follow the URIs in the API Information section below.
+5. To view the consumer service: see api-data-website_1 port number assigned in terminal upon startup.
 
-2. A "producer" (API) service found in the directory titled 'api'
-This service handles retrieving data from a database, formatting the data (JSON and CSV), and making requested data avaliable.
-
-3. A "Consumer" service found in the directory titled 'apiDataWebsite'
-This service makes all the requests detailed in the 'functionality' section and displays them on one web page. Note: The top 'n' open and close times are demoed for n=3, but the api service allows n to be any number.
-
-## Functionality added
+## API Information
 
 * RESTful service exposing what is stored in MongoDB with the following three basic APIs:
     * "http://<host:port>/listAll" returns all open and close times in the database
@@ -48,20 +80,22 @@ This service makes all the requests detailed in the 'functionality' section and 
 * Consumer programs (e.g., in jQuery) use the services exposed (see the apiDataWebsite directory).
 
 ## Implementation details
-(1) In api.py (api/api.py)
-The DB only holds one entry at a time containing a key for each of the fields and their values in an array. Because of this, the MongoDB method find_one() is used over find().
+* In api.py (api/api.py)
+    * The DB only holds one entry at a time containing a key for each of the fields and their values in an array. Because of this, the MongoDB method find_one() is used over find().
 
-The DB stores JSON objects by default. Therefore no conversion is necessary for json formatting.
+    * The DB stores JSON objects by default. Therefore no conversion is necessary for json formatting.
 
-CSV formatting is handled using the library 'pandas'. A DataFrame object containing the dictionary entry in the database and is converted to csv using the pandas method to_csv().
+    * CSV formatting is handled using the library 'pandas'. A DataFrame object containing the dictionary entry in the database and is converted to csv using the pandas method to_csv().
 
-The value arrays in the database are already sorted, getting the top 'k' times is a matter of getting the last 'n' elements in the open and close time arrays.
+    * The value arrays in the database are already sorted, getting the top 'k' times is a matter of getting the last 'n' elements in the open and close time arrays.
 
-(2) In index.php (apiDataWebsite/index.php)
-Requests are made to each of the following URI's above and displayed on one web page using php. The top 'k' times is just a demo (k = 3), a URI with a different number will give a different result.
+* In index.php (apiDataWebsite/index.php)
+    * Requests are made to each of the following URI's above and displayed on one web page using php. The top 'k' times is just a demo (k = 3), a URI with a different number will give a different result.
 
-(3) In docker-compose.yml
-4 containers are created for each of the services described above.
+* In docker-compose.yml
+    * 4 seperate containers are created for each of the services described above (MongoDB, main web service, API, and consumer service).
 
-Issues installing solved:
-https://computingforgeeks.com/install-docker-and-docker-compose-on-linux-mint-19/
+## Aknowledgements
+This project was for CIS 322, Introduction to Software Engineering at University of Oregon, Spring 2020.
+
+Professor Michal Young created the inital version of the project (https://bitbucket.org/UOCIS322/proj4-brevets/src/master/) and Professor Michal Young and Professor Ram Durairajan created the project specifications (https://bitbucket.org/UOCIS322/proj4-brevets/src/master/, https://bitbucket.org/UOCIS322/proj5-mongo/src/master/, and https://bitbucket.org/UOCIS322/proj6-rest/src/master/ in other words, this project is 3 sequential term projects joined together).
