@@ -1,45 +1,51 @@
-<h1>Brevet time calculator clone with additional features and services</h1>
-<h2>Background</h2>
-<p>The Randonneurs USA (RUSA) time calculator is a tool used for calculating control times for a brevet. A brevet is a timed, long distance road cycling event. A control point refers to a point where a rider must obtain proof of passage (which shows that a rider completed the entire course without shortcutting and that they finished it within the allotted time limi). Control times are the minimum and maximum times by which the rider must arrive at the location (of the control point).</p>
+# Brevet time calculator clone with additional features and services
+## Background
+The Randonneurs USA (RUSA) time calculator is a tool used for calculating control times for a brevet. A brevet is a timed, long distance road cycling event. A control point refers to a point where a rider must obtain proof of passage (which shows that a rider completed the entire course without shortcutting and that they finished it within the allotted time limi). Control times are the minimum and maximum times by which the rider must arrive at the location (of the control point).
 
-<h2>Project Overview</h2>
-<p>The original version of the main web service: https://rusa.org/octime_acp.html. The updated main web service is located in the 'brevetCalculatorWebsite' directory.</p>
-<ul>Additional features to the main web service include: 
-    <li>Dynamic open and close time fields (implemented using Ajax)</li>
-    <li>Save distance and open and close times (implemented using MongoDB)</li>
-    <li>Display saved distance and open and close times</li>
-</ul>
-<br>
-<ul>Additional services include:
-    <li>A "producer" (API) service found in the directory titled 'api'. This service handles retrieving data from a database formatting the data (JSON and CSV), and making requested data avaliable. </li>
-    <li> A "Consumer" service found in the directory titled 'apiDataWebsite' This service makes all the requests detailed in the 'functionality' section and displays them on one web page. Note: The top 'n' open and close times are demoed for n=3, but the api service allows n to be any number.</li>
-</ul>
-<br>
-<p>Docker and Docker Compose were used for testing and deployment of the above services.</p>
+## Project Overview
+The original version of the main web service: https://rusa.org/octime_acp.html. The updated main web service is located in the 'brevetCalculatorWebsite' directory.
 
-<h2>What is in this repository</h2>
-<p>docker-compose file (docker-compose.yml) and docker files (Dockerfile) are for containment and interaction between services.</p>
-<br>
-<p>screenshots (directory) contains screenshots of each of the services described working.</p> 
-<br>
-<ol>3 main services were implemented for this project:
-    <li>A main web service: brevet calculator (in the 'brevetCalculatorWebsite' directory)
-    This service handles the logic for calculating the brevet open and close times, sending (form) data to a database (MongoDB), and creation of the brevet calculator web page.
-        <ul>In this service's directory:
-            <li>static (directory)<br>CSS and JS files necessary for HTML presentation and 'moment' library utilized in HTML pages.<li>
-            <li>templates (directory)<br>HTML templates to be completed with 'session' data. For example, calc.html is dynamically updated with open/close times.</li>
-            <li>acp_times.py<br>Logic for open and close time calculation based on the algorithm from https://rusa.org/pages/acp-brevet-control-times-calculator</li>
-            <li>brevet_calc.py<br>Framework for running our program (using Flask) which renders apprpriate HTML pages and handles AJAX requests (sent from template/calc.html).</li>
-            <li>config.py<br>Configures from app.ini and credentials.ini and conigures Flask application object</li>
-        </ul>
-    </li>
-    <li>A "producer" (API) service found in the directory titled 'api'. This service handles retrieving data from a database, formatting the data (JSON and CSV), and making requested data avaliable.
-        <ul>In this service's directory:
-            <li>api.py<br>Exposes/retrieves requested data from database</li>
-        </ul>
-    </li>
-    <li>A "Consumer" service found in the directory titled 'apiDataWebsite'. This service makes all the requests detailed in the 'functionality' section and displays them on one web page. Note: The top 'n' open and close times are demoed for n=3, but the api service allows n to be any number. This is all handled in index.php. </li>
-</ol>
+* Additional features to the main web service include: 
+    * Dynamic open and close time fields (implemented using Ajax)
+    * Save distance and open and close times (implemented using MongoDB)
+    * Display saved distance and open and close times
+
+* Additional services include:
+    * A "producer" (API) service found in the directory titled 'api'. This service handles retrieving data from a database formatting the data (JSON and CSV), and making requested data avaliable. 
+    * A "Consumer" service found in the directory titled 'apiDataWebsite' This service makes all the requests detailed in the 'functionality' section and displays them on one web page. Note: The top 'n' open and close times are demoed for n=3, but the api service allows n to be any number.
+
+Docker and Docker Compose were used for testing and deployment of the above services.
+
+## What is in this repository
+* docker-compose file (docker-compose.yml) and docker files (Dockerfile) are for containment and interaction between services.
+
+* screenshots (directory) contains screenshots of each of the services described working. 
+
+* 3 main services were implemented for this project:
+    1. A main web service: brevet calculator (in the 'brevetCalculatorWebsite' directory). This service handles the logic for calculating the brevet open and close times, sending (form) data to a database (MongoDB), and creation of the brevet calculator web page.
+
+        * In this service's directory:
+            * static (directory)
+            CSS and JS files necessary for HTML presentation and 'moment' library utilized in HTML pages.
+
+            * templates (directory)
+            HTML templates to be completed with 'session' data. For example, calc.html is dynamically updated with open/close times.
+
+            * acp_times.py
+            Logic for open and close time calculation based on the algorithm from https://rusa.org/pages/acp-brevet-control-times-calculator .
+
+            * brevet_calc.py
+            Framework for running our program (using Flask) which renders apprpriate HTML pages and handles AJAX requests (sent from template/calc.html)
+
+            * config.py
+            Configures from app.ini and credentials.ini and conigures Flask application object.
+
+    2. A "producer" (API) service found in the directory titled 'api'. This service handles retrieving data from a database, formatting the data (JSON and CSV), and making requested data avaliable.
+        * In this service's directory:
+            * api.py
+            Exposes/retrieves requested data from database
+
+    3. A "Consumer" service found in the directory titled 'apiDataWebsite'. This service makes all the requests detailed in the 'functionality' section and displays them on one web page. Note: The top 'n' open and close times are demoed for n=3, but the api service allows n to be any number. This is all handled in index.php. 
 
 ## System Information
 * All services were tested and deployed using Docker Compose on a virtual machine (VirtualBox Version 6.0.24) running Linux Mint 19.3 MATE.
