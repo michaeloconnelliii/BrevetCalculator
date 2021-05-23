@@ -1,4 +1,4 @@
-# Brevet time calculator clone with additional features and services
+# Brevet time calculator with additional features and services
 ## Background
 The Randonneurs USA (RUSA) time calculator is a tool used for calculating control times for a brevet. A brevet is a timed, long distance road cycling event. A control point refers to a point where a rider must obtain proof of passage (which shows that a rider completed the entire course without shortcutting and that they finished it within the allotted time limi). Control times are the minimum and maximum times by which the rider must arrive at the location (of the control point).
 
@@ -11,7 +11,7 @@ The original version of the main web service: https://rusa.org/octime_acp.html. 
     * Display saved distance and open and close times
 
 * Additional services include:
-    * A "producer" (API) service found in the directory titled 'api'. This service handles retrieving data from a database formatting the data (JSON and CSV), and making requested data avaliable. 
+    * A "producer" (API) service found in the directory titled 'api'. This service handles retrieving data from a database, formatting the data (JSON and CSV), and making requested data avaliable. 
     * A "Consumer" service found in the directory titled 'apiDataWebsite' This service makes all the requests detailed in the 'functionality' section and displays them on one web page. Note: The top 'n' open and close times are demoed for n=3, but the api service allows n to be any number.
 
 Docker and Docker Compose were used for testing and deployment of the above services.
