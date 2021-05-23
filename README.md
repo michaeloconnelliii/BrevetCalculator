@@ -26,23 +26,29 @@ Docker and Docker Compose were used for testing and deployment of the above serv
 
         * In this service's directory:
             * static (directory)
+            
             CSS and JS files necessary for HTML presentation and 'moment' library utilized in HTML pages.
 
             * templates (directory)
+            
             HTML templates to be completed with 'session' data. For example, calc.html is dynamically updated with open/close times.
 
             * acp_times.py
+            
             Logic for open and close time calculation based on the algorithm from https://rusa.org/pages/acp-brevet-control-times-calculator .
 
             * brevet_calc.py
+            
             Framework for running our program (using Flask) which renders apprpriate HTML pages and handles AJAX requests (sent from template/calc.html)
 
             * config.py
+            
             Configures from app.ini and credentials.ini and conigures Flask application object.
 
     2. A "producer" (API) service found in the directory titled 'api'. This service handles retrieving data from a database, formatting the data (JSON and CSV), and making requested data avaliable.
         * In this service's directory:
             * api.py
+            
             Exposes/retrieves requested data from database
 
     3. A "Consumer" service found in the directory titled 'apiDataWebsite'. This service makes all the requests detailed in the 'functionality' section and displays them on one web page. Note: The top 'n' open and close times are demoed for n=3, but the api service allows n to be any number. This is all handled in index.php. 
