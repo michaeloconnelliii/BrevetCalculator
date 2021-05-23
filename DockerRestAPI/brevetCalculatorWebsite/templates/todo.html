@@ -1,0 +1,53 @@
+<form action="/display">
+<button type="submit" value="home_page" formaction="/index"> Home Page </button>
+
+<body>
+  <!-- Only one value for distance and begin date -->
+  <p> Distance: </br> {{items.distance[0]}} </p>
+  <p> Begins at: </br> {{items.begin_date[0]}} </p>
+
+  <p> Miles:
+    </br>
+    {% for value in items.miles %}
+      {{value}}
+    &nbsp
+    {% endfor %}
+  </p>
+
+  <p> KM:
+    </br>
+    {% for value in items.km %}
+      {{value}}
+    &nbsp
+      {% endfor %}
+  </p>
+
+  <p> Location:
+  </br>
+  {% for value in items.location %}
+    {{value}}
+  &nbsp
+    {% endfor %}
+  </p>
+
+  <p> Open time:
+  </br>
+  {% for value in items.open %}
+    {{value}} </hr>
+  &nbsp
+    {% endfor %}
+  </p>
+
+  <p> Close time:
+  </br>
+  {% for value in items.close %}
+    {{value}}
+  &nbsp
+    {% endfor %}
+  </p>
+
+</br>
+
+<b> Note: The database is reset upon every submit </b>
+
+</body>

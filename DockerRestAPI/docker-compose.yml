@@ -1,0 +1,36 @@
+version: '3'  # version of compose format
+
+services:
+  api-service:
+    build: ./api
+    volumes:
+      - ./api:/app
+    ports:
+      - 5001:80  # host:container
+
+  api-data-website:
+    image: php:apache
+    volumes:
+      - ./apiDataWebsite:/var/www/html
+    ports:
+      - 5002:80  # host:container
+    depends_on:
+      - api-service  # website is not going to work unless api-service is running
+
+  brevet-calculator-website:
+    build: ./brevetCalculatorWebsite
+    command: python -u brevet_calc.py
+    ports:
+      - 5000:5000
+    volumes:
+      - ./brevetCalculatorWebsite:/app
+    links:
+      - db
+    environment:
+      - DB_PORT_27017_TCP_ADDR=db
+    depends_on:
+      - db
+
+  db:
+    image: mongo:3.0.2
+    command: mongod --smallfiles
