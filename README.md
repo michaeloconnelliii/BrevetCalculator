@@ -110,7 +110,7 @@ https://computingforgeeks.com/install-docker-and-docker-compose-on-linux-mint-19
 * In docker-compose.yml
     * 4 seperate containers are created for each of the services described above (MongoDB, main web service, API, and consumer service).
 
-## Aknowledgements
+## Acknowledgements
 This project was for CIS 322, Introduction to Software Engineering at University of Oregon, Spring 2020.
 
 Professor Michal Young created the inital version of the project (https://bitbucket.org/UOCIS322/proj4-brevets/src/master/) and Professor Michal Young and Professor Ram Durairajan created the project specifications (https://bitbucket.org/UOCIS322/proj4-brevets/src/master/, https://bitbucket.org/UOCIS322/proj5-mongo/src/master/, and https://bitbucket.org/UOCIS322/proj6-rest/src/master/ in other words, this project is 3 sequential term projects joined together).
